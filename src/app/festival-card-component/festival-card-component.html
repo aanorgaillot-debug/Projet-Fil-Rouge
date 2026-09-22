@@ -1,0 +1,38 @@
+<article class="article" [class.selected]="selected" >
+
+    @if (festi(); as festival) {
+        <h3>{{ festival.name }}, {{ festival.year }}</h3>
+        <p>{{ festival.location }}</p>
+
+        @switch (festival.status) {
+            @case ('planned') {
+                <p>Ouverture prochaine</p>
+            }
+            @case ('open') {
+                <p>Festival ouvert</p>
+            }
+            @case ('closed') {
+                <p>Festival terminé</p>
+            }
+            @default {
+                <p>État inconnu</p>
+            }
+        }
+
+        <button (click)="ChangeEdition()">
+            Changer d'édition
+        </button>
+
+        <button (click)="SelectFesti()">
+            Sélectionner
+        </button>
+
+        <button (click)="remove()">
+            Retirer {{ festival.name }}
+        </button>
+
+    } @else {
+        <p>Festival introuvable</p>
+    }
+
+</article>

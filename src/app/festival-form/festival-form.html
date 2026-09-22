@@ -1,0 +1,42 @@
+<label for="firstname"> Nom </label>
+<input id="name" [formField]="editorForm.name"
+[attr.aria-invalid]="editorForm.name().touched() &&
+editorForm.name().invalid() ? 'true' : null"
+[attr.aria-describedby]="editorForm.name().touched() &&
+editorForm.name().invalid() ? 'firstname-errors' : null"> 
+@if (editorForm.name().touched() && editorForm.name().invalid()) {
+    <ul id="firstname-errors">
+        @for (error of editorForm.name().errors(); track error.kind) { <li>{{ error.message }}</li> }
+    </ul>
+} 
+
+<label for="location"> Lieu </label>
+<input id="location" [formField]="editorForm.location"
+[attr.aria-invalid]="editorForm.location().touched() &&
+editorForm.location().invalid() ? 'true' : null"
+[attr.aria-describedby]="editorForm.location().touched() &&
+editorForm.location().invalid() ? 'location-errors' : null"> 
+@if (editorForm.location().touched() && editorForm.location().invalid()) {
+    <ul id="location-errors">
+        @for (error of editorForm.location().errors(); track error.kind) { <li>{{ error.message }}</li> }
+    </ul>
+} 
+
+<label for="year"> Année </label>
+<input id="year" type="number" [formField]="editorForm.year"
+[attr.aria-invalid]="editorForm.year().touched() &&
+editorForm.year().invalid() ? 'true' : null"
+[attr.aria-describedby]="editorForm.year().touched() &&
+editorForm.year().invalid() ? 'year-errors' : null"> 
+@if (editorForm.year().touched() && editorForm.year().invalid()) {
+    <ul id="year-errors">
+        @for (error of editorForm.year().errors(); track error.kind) { <li>{{ error.message }}</li> }
+    </ul>
+} 
+
+<h3>Aperçu</h3>
+
+
+<p>Nom : {{ model().name }}</p>
+<p>Lieu : {{ model().location }}</p>
+<p>Année : {{ model().year }}</p>
