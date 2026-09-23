@@ -6,7 +6,8 @@ export class FestivalService {
     readonly _listeFestival = signal<Festival[]>(initFesti())
     readonly festivals = this._listeFestival.asReadonly()
     readonly festivalCount = computed(() => this._listeFestival().length)
-    
+    private _nextId = this._listeFestival.length + 1;
+
     remove(id: number): boolean {
         const exists = this._listeFestival().some(s => s.id === id);
         if (!exists) return false;
@@ -27,20 +28,40 @@ export class FestivalService {
         );
     }
 
-    addFestival(): void {
+    addFestival(draft: FestivalDraft): void {
         const festival: Festival = {
-            id: 3,
-            name: "Hellfest",
-            location: "Clisson",
-            year: 2026,
+            id: this._nextId,
+            name: draft.name,
+            location: draft.location,
+            year: draft.year,
             status: "planned",
-            featured: true
+            featured: false
         };
+        this._nextId += 1
 
         this._listeFestival.update(
             festivals => [...festivals, festival]
         );
     }
+
+    update(id: number, draft: FestivalDraft): boolean {
+        const exist = this._listeFestival().filter(
+            festival => festival.id === id
+        );
+
+        if (!exist) {
+            return false;
+        }
+        this._listeFestival.update(festivals =>festivals.map(festival =>
+            festival.id === id ? {...festival,
+                name: draft.name,
+                location: draft.location,
+                year: draft.year}: festival
+            )
+        );
+        return true;
+    }
+
 }
 
 function initFesti(): Festival[] {
@@ -48,3 +69,7 @@ function initFesti(): Festival[] {
     {id: 1, name : "RoseFestival", location : "Toulouse", year: 2025, status: "open", featured : true},
     {id: 2, name : "GaroRock", location : "Marmande", year: 2025, status: "planned", featured : true}];
 }
+
+export type FestivalDraft = Pick<Festival, 'name' | 'location' | 'year'>;
+export type FestivalFormModel = Omit<FestivalDraft, 'year' | 'name' | 'location'> & { year: number | null; } & {name: string | ""} & {location: string | ""};
+export type FestivalUpdate = Partial<Festival> & { id: number };
