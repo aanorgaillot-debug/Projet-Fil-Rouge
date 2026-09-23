@@ -40,9 +40,3 @@ editorForm.year().invalid() ? 'year-errors' : null">
 <p>Nom : {{ model().name }}</p>
 <p>Lieu : {{ model().location }}</p>
 <p>Année : {{ model().year }}</p>
-
-<form (submit)="onSubmit($event)" novalidate>
-    <!-- Les champs déjà construits se trouvent ici. -->
-    <button type="submit">Enregistrer</button>
-</form>
-<p role="status">{{ statusMessage() }}</p>
