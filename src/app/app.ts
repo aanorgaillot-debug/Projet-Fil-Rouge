@@ -14,5 +14,7 @@ export class App {
   protected readonly title = signal('festival-AanorGaillot-app');
   readonly service = inject(FestivalService);
 
-
+  AddFestival() {
+    this.service.addFestival();
+  }
 }
