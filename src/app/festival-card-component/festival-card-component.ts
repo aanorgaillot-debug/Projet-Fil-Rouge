@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, output } from '@angular/core';
 import { FestivalService } from '../festival-service';
 
 @Component({
@@ -11,6 +11,8 @@ export class FestivalCardComponent {
 
     readonly id = input.required<number>();
 
+    readonly select = output<number>();
+
     readonly service = inject(FestivalService);
 
     readonly festi = computed(() =>
@@ -22,7 +24,7 @@ export class FestivalCardComponent {
           const festival = this.festi();
 
           if (festival) {
-            console.log("L'année courante de ",festival.name," est ",festival.year);
+            console.log("L'année courante de ", festival.name, " est ", festival.year);
           }
       });
     }
@@ -31,6 +33,7 @@ export class FestivalCardComponent {
 
     SelectFesti() {
       this.selected = !this.selected;
+      this.select.emit(this.id());
     }
 
     ChangeEdition() {
@@ -41,4 +44,3 @@ export class FestivalCardComponent {
       this.service.remove(this.id());
     }
 }
-
