@@ -33,8 +33,11 @@ export class FestivalForm {
         const draft = toStudentDraft(formulaire().value());
         if (id === null) this.service.addFestival(draft);
         else if (!this.service.update(id, draft)) {
-        return { kind: 'missing', message: 'Student supprimé du catalogue.' };
-        } }, });
+        return { kind: 'missing', message: 'Festival supprimé du catalogue.' };
+        } 
+        return undefined
+      },
+      });
     this.statusMessage.set(success ? 'Enregistrement effectué.' : 'Enregistrement non effectué.');
   }
 }
